@@ -1,6 +1,6 @@
 # Improved Hardware Library in PyRTL
 
-This is my college freshman research project about building small reusable
+This is a year-long research project about building small reusable
 hardware blocks in PyRTL.  I wanted it to feel like a tiny, beginner-friendly
 version of an FPGA primitive library.
 

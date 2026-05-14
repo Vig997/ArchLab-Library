@@ -7,6 +7,13 @@ version of an FPGA primitive library.
 The project is not a real Intel library replacement.  It is a learning project
 focused on simulation, clear code, and tests.
 
+The main idea is to take hardware blocks that show up again and again in class
+or lab work and put them into one small Python library.  Some blocks are very
+basic, like muxes and counters.  Others are a little more involved, like a
+FIFO queue and valid/ready pipeline pieces.  I built the project this way
+because I wanted to move from individual circuits toward thinking about how
+circuits can be organized and reused.
+
 ## Project Overview
 
 I built four small groups of components:
@@ -22,6 +29,10 @@ I built four small groups of components:
 
 There are also pytest tests and runnable examples in `tests/` and `examples/`.
 
+The examples are meant to be small enough to read in one sitting.  Each one
+builds a PyRTL circuit, runs a short simulation, and prints the output.  The
+tests are more complete and check the behavior across more input cases.
+
 ## Motivation
 
 I made this project because I kept seeing the same hardware blocks in digital
@@ -31,6 +42,12 @@ understand how those blocks can be written in Python using PyRTL.
 I also wanted to try valid/ready dataflow circuits.  The idea is simple: data
 moves when `valid` and `ready` are both high.  That made buffers and pipelines
 more interesting to study.
+
+At the start, I mostly thought of hardware as one circuit at a time.  By the
+end, I was thinking more about interfaces: what inputs a block needs, what
+outputs it produces, and how another block would connect to it.  That was one
+of the biggest reasons for making this a library instead of just a collection
+of unrelated demos.
 
 ## What PyRTL Is
 
@@ -67,6 +84,25 @@ Main blocks included:
 - dataflow: channel helper, buffer, pass-through stage, all-or-nothing fork,
   mux, demux, unit-rate actor, priority merge
 
+The arithmetic section includes both small one-bit blocks and wider blocks.
+The ripple-carry adder is useful because it shows how a larger circuit can be
+built by connecting repeated smaller pieces.
+
+The memory section is mostly for learning how state works.  The FIFO is not
+the most efficient design, but it clearly shows the head pointer, tail pointer,
+count, empty flag, and full flag.
+
+The dataflow section is the newest part of the project.  It is there to show
+how simple pipeline stages can pause when the next stage is not ready.
+
+## What Was Not Implemented
+
+- a full Intel primitive library
+- real FPGA timing models
+- special FPGA blocks like DSPs or PLLs
+- a full dataflow compiler
+- a polished package ready to publish
+
 ## Install
 
 ```bash
@@ -81,6 +117,10 @@ pytest
 
 The tests check muxes, demuxes, counters, arithmetic, FIFO behavior, and the
 valid/ready dataflow blocks.
+
+I used tests because hardware bugs can be hard to see just by looking at the
+code.  Running the same circuit over many input values helped me catch mistakes
+and made the project feel more reliable.
 
 ## Run Examples
 
@@ -111,6 +151,10 @@ need clear enable behavior.  FIFOs need correct head, tail, count, full, and
 empty logic.  Valid/ready circuits need careful backpressure connections.
 
 I also learned that examples and tests matter just as much as the code.
+
+The project also helped me get more comfortable reading PyRTL simulation
+results.  A lot of the learning came from writing a circuit, guessing what the
+next cycle should do, and then checking whether the simulation matched that.
 
 ## Year-Long Progress
 

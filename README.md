@@ -67,14 +67,6 @@ Main blocks included:
 - dataflow: channel helper, buffer, pass-through stage, all-or-nothing fork,
   mux, demux, unit-rate actor, priority merge
 
-## What Was Not Implemented
-
-- a full Intel primitive library
-- real FPGA timing models
-- special FPGA blocks like DSPs or PLLs
-- a full dataflow compiler
-- a polished package ready to publish
-
 ## Install
 
 ```bash
